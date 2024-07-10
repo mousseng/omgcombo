@@ -9,8 +9,12 @@ jobs:
       - uses: actions/setup-dotnet@main
         with:
           dotnet-version: '8.x'
-      - run: |
+      - name: Fetch dalamud dependencies
+        run: |
           Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile latest.zip
           Expand-Archive -Force latest.zip "$env:AppData\XIVLauncher\addon\Hooks\dev\"
-      - run: dotnet restore
-      - run: dotnet build -c Release
+      - name: Fetch nuget dependencies
+        run: dotnet restore
+      - name: Build solution
+        run: dotnet build -c Release
+      - run: ls
