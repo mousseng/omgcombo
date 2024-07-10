@@ -1,0 +1,17 @@
+name: Update Plugin Repo
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-plugin-repo:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/setup-dotnet@main
+        with:
+          dotnet-version: '8.x'
+      - run: dotnet restore
+      - run: dotnet build -c Release
+      - run: ls
