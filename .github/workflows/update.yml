@@ -23,7 +23,7 @@ jobs:
       - name: Build solution
         run: dotnet build -c Release
       - name: Upload built package
-        uses: actions/upload-artifact
+        uses: actions/upload-artifact@main
         with:
           name: dalamud-package
           path: omgcombo/bin/Release/net8.0-windows/omgcombo/*
