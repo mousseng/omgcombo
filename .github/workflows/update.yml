@@ -42,7 +42,7 @@ jobs:
         uses: actions/download-artifact@main
         with:
           name: dalamud-package
-          path: plugins/
+          path: plugins/omgcombo/
       - name: Commit package update
         uses: EndBug/add-and-commit@main
         with:
