@@ -51,7 +51,7 @@ jobs:
           author_email: github-actions[bot]@users.noreply.github.com
           message: omgcombo ${{ github.ref_name }}
       - name: Release package update
-        uses: softprops/action-gh-release@main
+        uses: softprops/action-gh-release@master
         with:
           files: plugins/omgcombo/latest.zip
           draft: false
