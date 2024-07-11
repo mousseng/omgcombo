@@ -56,3 +56,5 @@ jobs:
           files: plugins/omgcombo/latest.zip
           draft: false
           prerelease: false
+          repository: mousseng/DalamudPlugins
+          token: ${{ secrets.pat }}
