@@ -39,7 +39,7 @@ jobs:
           token: ${{ secrets.pat }}
           ref: main
       - name: Download built package
-        uses: actions/download-artifact
+        uses: actions/download-artifact@main
         with:
           name: dalamud-package
           path: plugins/
