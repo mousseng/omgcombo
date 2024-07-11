@@ -1,20 +1,58 @@
 name: Update Plugin Repo
-on: [push, workflow_dispatch]
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-  update-plugin-repo:
+  build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@main
-      - uses: actions/setup-dotnet@main
+      - name: Checkout source
+        uses: actions/checkout@main
+      - name: Setup build tools
+        uses: actions/setup-dotnet@main
         with:
           dotnet-version: '8.x'
       - name: Fetch dalamud dependencies
         run: |
-          Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile latest.zip
-          Expand-Archive -Force latest.zip "$env:AppData\XIVLauncher\addon\Hooks\dev\"
+          Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile dalamud.zip
+          Expand-Archive -Force dalamud.zip "$env:AppData\XIVLauncher\addon\Hooks\dev\"
       - name: Fetch nuget dependencies
         run: dotnet restore
       - name: Build solution
         run: dotnet build -c Release
-      - run: ls
+      - name: Upload built package
+        uses: actions/upload-artifact
+        with:
+          name: dalamud-package
+          path: omgcombo/bin/Release/net8.0-windows/omgcombo/*
+
+  publish:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout plugin repo
+        uses: actions/checkout@main
+        with:
+          repository: mousseng/DalamudPlugins
+          token: ${{ secrets.pat }}
+          ref: main
+      - name: Download built package
+        uses: actions/download-artifact
+        with:
+          name: dalamud-package
+          path: plugins/
+      - name: Commit package update
+        uses: EndBug/add-and-commit@main
+        with:
+          add: plugins/omgcombo/omgcombo.json
+          author_name: GitHub Action
+          author_email: github-actions[bot]@users.noreply.github.com
+          message: omgcombo ${{ github.ref_name }}
+      - name: Release package update
+        uses: softprops/action-gh-release@main
+        with:
+          files: plugins/omgcombo/latest.zip
+          draft: false
+          prerelease: false
