@@ -27,6 +27,13 @@ jobs:
         with:
           name: dalamud-package
           path: omgcombo/bin/Release/net8.0-windows/omgcombo/*
+      - name: Release package update
+        uses: softprops/action-gh-release@master
+        with:
+          files: omgcombo/bin/Release/net8.0-windows/omgcombo/latest.zip
+          draft: false
+          prerelease: false
+          token: ${{ secrets.pat }}
 
   publish:
     needs: build
@@ -50,11 +57,3 @@ jobs:
           author_name: GitHub Action
           author_email: github-actions[bot]@users.noreply.github.com
           message: omgcombo ${{ github.ref_name }}
-      - name: Release package update
-        uses: softprops/action-gh-release@master
-        with:
-          files: plugins/omgcombo/latest.zip
-          draft: false
-          prerelease: false
-          repository: mousseng/DalamudPlugins
-          token: ${{ secrets.pat }}
