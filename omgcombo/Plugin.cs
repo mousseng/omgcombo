@@ -14,6 +14,7 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] private static IFramework Framework { get; set; }
     [PluginService] private static IClientState Game { get; set; }
     [PluginService] private static IJobGauges JobGauges { get; set; }
+    [PluginService] private static IPluginLog PluginLog { get; set; }
 
     private WindowSystem WindowSystem { get; } = new("omgcombo");
     private Configuration Config { get; }
@@ -54,6 +55,7 @@ public sealed class Plugin : IDalamudPlugin
         Combos.Init();
         Gauges.Init(JobGauges);
         Player.Init(Game);
+        Logger.Init(PluginLog);
     }
 
     private int _lastLevel;

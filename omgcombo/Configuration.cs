@@ -32,6 +32,8 @@ public sealed class SamConfiguration
     public bool DoYukikazeCombo;
     public bool DoMangetsuCombo;
     public bool DoOkaCombo;
+    public bool DoIaijutsu;
+    public bool DoIkishoten;
 }
 
 public sealed class SmnConfiguration

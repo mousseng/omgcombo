@@ -43,6 +43,8 @@ public sealed class ConfigWindow : Window
             DrawConfigItem("Replace Yukikaze Combo", ref _config.Sam.DoYukikazeCombo);
             DrawConfigItem("Replace Mangetsu Combo", ref _config.Sam.DoMangetsuCombo);
             DrawConfigItem("Replace Oka Combo", ref _config.Sam.DoOkaCombo);
+            DrawConfigItem("Replace Iaijutsu", ref _config.Sam.DoIaijutsu);
+            DrawConfigItem("Replace Ikishoten", ref _config.Sam.DoIkishoten);
         }
 
         if (ImGui.CollapsingHeader("SMN"))
