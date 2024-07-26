@@ -46,7 +46,7 @@ jobs:
       - name: Commit package update
         uses: EndBug/add-and-commit@main
         with:
-          add: plugins/omgcombo/omgcombo.json
+          add: plugins/omgcombo/*
           author_name: GitHub Action
           author_email: github-actions[bot]@users.noreply.github.com
           message: omgcombo ${{ github.ref_name }}
