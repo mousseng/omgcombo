@@ -31,7 +31,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dalamud-package
-          path: omgcombo/bin/Release/net8.0-windows/omgcombo/*
+          path: omgcombo/bin/x64/Release/omgcombo/*
+          if-no-files-found: error
 
       - name: Release package update
         uses: softprops/action-gh-release@v2
