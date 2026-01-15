@@ -9,28 +9,34 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
+
       - name: Setup build tools
-        uses: actions/setup-dotnet@main
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '8.x'
+          dotnet-version: '9.x'
+
       - name: Fetch dalamud dependencies
         run: |
           Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile dalamud.zip
           Expand-Archive -Force dalamud.zip "$env:AppData\XIVLauncher\addon\Hooks\dev\"
+
       - name: Fetch nuget dependencies
         run: dotnet restore
+
       - name: Build solution
         run: dotnet build -c Release
+
       - name: Upload built package
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v6
         with:
           name: dalamud-package
           path: omgcombo/bin/Release/net8.0-windows/omgcombo/*
+
       - name: Release package update
         uses: softprops/action-gh-release@master
         with:
-          files: omgcombo/bin/Release/net8.0-windows/omgcombo/latest.zip
+          files: omgcombo/bin/Release/net9.0-windows/omgcombo/latest.zip
           draft: false
           prerelease: false
           token: ${{ secrets.pat }}
@@ -40,18 +46,20 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout plugin repo
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
         with:
           repository: mousseng/DalamudPlugins
           token: ${{ secrets.pat }}
           ref: main
+
       - name: Download built package
-        uses: actions/download-artifact@main
+        uses: actions/download-artifact@v7
         with:
           name: dalamud-package
           path: plugins/omgcombo/
+
       - name: Commit package update
-        uses: EndBug/add-and-commit@main
+        uses: EndBug/add-and-commit@v9
         with:
           add: plugins/omgcombo/*
           author_name: GitHub Action

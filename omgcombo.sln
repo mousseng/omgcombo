@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "omgcombo", "omgcombo\omgcombo.csproj", "{FF13E0E7-F050-4732-A723-5345B9B9BC96}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F87E1153-71B5-4F93-B28C-AB10E66F02E2}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\update.yml = .github\workflows\update.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
