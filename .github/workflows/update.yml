@@ -50,6 +50,7 @@ jobs:
         with:
           repository: mousseng/DalamudPlugins
           ref: main
+          token: ${{ secrets.pat }} # this sets the permissions for add-and-commit
 
       - name: Download built package
         uses: actions/download-artifact@v4
