@@ -45,10 +45,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout plugin repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: mousseng/DalamudPlugins
-          token: ${{ secrets.pat }}
           ref: main
 
       - name: Download built package
