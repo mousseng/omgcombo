@@ -36,19 +36,19 @@ public sealed class Ast : IJob
 
     private static uint MapDraw(DrawType activeDraw) => activeDraw switch
     {
-        DrawType.ASTRAL => AstralDraw,
-        DrawType.UMBRAL => UmbralDraw,
+        DrawType.Astral => AstralDraw,
+        DrawType.Umbral => UmbralDraw,
         _ => throw new NotImplementedException()
     };
 
     private static uint MapCard(CardType card, uint defaultAction) => card switch
     {
-        CardType.BALANCE => TheBalance,
-        CardType.ARROW => TheArrow,
-        CardType.SPIRE => TheSpire,
-        CardType.SPEAR => TheSpear,
-        CardType.BOLE => TheBole,
-        CardType.EWER => TheEwer,
+        CardType.Balance => TheBalance,
+        CardType.Arrow => TheArrow,
+        CardType.Spire => TheSpire,
+        CardType.Spear => TheSpear,
+        CardType.Bole => TheBole,
+        CardType.Ewer => TheEwer,
         _ => defaultAction,
     };
 }

@@ -24,6 +24,8 @@ public sealed class Sam : IJob
         MeikyoShisui = 1233,
         OgiNamikiriReady = 2959,
         ZanshinReady = 3855,
+        TsubameReady2 = 3852,
+        TsubameReady3 = 4216,
         // actions
         Hakaze = 7477,
         Gyofu = 36963,
@@ -111,15 +113,15 @@ public sealed class Sam : IJob
 
     private IconReplacer.ReplaceIcon? MakeIaijutsu() => Player.Level switch
     {
-        >= 100 => () => DoKaeshi(Higanbana, TendoGoken, TendoSetsugekka, TendoKaeshiGoken, TendoKaeshiSetsugekka),
-        >=  76 => () => DoKaeshi(Higanbana, TenkaGoken, MidareSetsugekka, KaeshiGoken, KaeshiSetsugekka),
+        >= 100 => () => DoTsubame(Higanbana, TendoGoken, TendoSetsugekka, TendoKaeshiGoken, TendoKaeshiSetsugekka),
+        >=  76 => () => DoTsubame(Higanbana, TenkaGoken, MidareSetsugekka, KaeshiGoken, KaeshiSetsugekka),
         >=  30 => () => DoIaijutsu(Higanbana, TenkaGoken, MidareSetsugekka),
         _      => null
     };
 
     private uint DoZanshin()
     {
-        if (_gauge.Kaeshi == Kaeshi.NAMIKIRI)
+        if (_gauge.Kaeshi == Kaeshi.Namikiri)
         {
             return KaeshiNamikiri;
         }
@@ -139,7 +141,7 @@ public sealed class Sam : IJob
 
     private uint DoIkishoten()
     {
-        if (_gauge.Kaeshi == Kaeshi.NAMIKIRI)
+        if (_gauge.Kaeshi == Kaeshi.Namikiri)
         {
             return KaeshiNamikiri;
         }
@@ -152,14 +154,19 @@ public sealed class Sam : IJob
         return Ikishoten;
     }
 
-    private uint DoKaeshi(uint h, uint g, uint s, uint kg, uint ks)
+    private uint DoTsubame(uint h, uint g, uint s, uint kg, uint ks)
     {
-        return _gauge.Kaeshi switch
+        if (Player.HasBuff(TsubameReady3))
         {
-            Kaeshi.SETSUGEKKA => ks,
-            Kaeshi.GOKEN      => kg,
-            _                 => DoIaijutsu(h, g, s)
-        };
+            return ks;
+        }
+
+        if (Player.HasBuff(TsubameReady2))
+        {
+            return kg;
+        }
+
+        return DoIaijutsu(h, g, s);
     }
 
     private uint DoIaijutsu(uint h, uint g, uint s)
@@ -168,7 +175,7 @@ public sealed class Sam : IJob
         {
             0b001 or 0b010 or 0b100 => h,
             0b011 or 0b101 or 0b110 => g,
-            0b111                    => s,
+            0b111                   => s,
             _ => Iaijutsu
         };
     }

@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Plugin.Services;
 
 namespace omgcombo.Services;
@@ -7,6 +8,7 @@ public static class Player
     private static IClientState ClientState;
     public static int Level => ClientState.LocalPlayer?.Level ?? default;
     // public static uint Job => ClientState.LocalPlayer?.ClassJob.Id ?? default;
+    public static StatusList? Buffs => ClientState.LocalPlayer?.StatusList;
 
     public static bool HasBuff(uint buffId)
     {

@@ -2,6 +2,9 @@
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Client.UI.Misc;
 using omgcombo.Services;
 using omgcombo.Windows;
 
@@ -19,6 +22,7 @@ public sealed class Plugin : IDalamudPlugin
     private WindowSystem WindowSystem { get; } = new("omgcombo");
     private Configuration Config { get; }
     private ConfigWindow? ConfigWindow { get; set; }
+    private DebugWindow? DebugWindow { get; set; }
     private IconReplacer? IconReplacer { get; set; }
 
     public Plugin()
@@ -40,14 +44,17 @@ public sealed class Plugin : IDalamudPlugin
 
     private void InitPlugin()
     {
-        IconReplacer = new IconReplacer(Config, Interop);
+        IconReplacer = new IconReplacer(Interop);
         Framework.Update += WatchPlayerLevel;
 
         ConfigWindow = new ConfigWindow(Dalamud, Config, IconReplacer);
+        DebugWindow = new DebugWindow(Dalamud, Config);
         WindowSystem.AddWindow(ConfigWindow);
+        WindowSystem.AddWindow(DebugWindow);
 
         Dalamud.UiBuilder.Draw += WindowSystem.Draw;
         Dalamud.UiBuilder.OpenConfigUi += ConfigWindow.Toggle;
+        Dalamud.UiBuilder.OpenMainUi += DebugWindow.Toggle;
     }
 
     private static void InitStatics()

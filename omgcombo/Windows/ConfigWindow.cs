@@ -1,6 +1,6 @@
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 
 namespace omgcombo.Windows;
 
@@ -34,6 +34,13 @@ public sealed class ConfigWindow : Window
         {
             DrawConfigItem("Replace Solid Barrel Combo", ref _config.Gnb.DoSolidBarrelCombo);
             DrawConfigItem("Replace Demon Slaughter Combo", ref _config.Gnb.DoDemonSlaughterCombo);
+        }
+
+        if (ImGui.CollapsingHeader("RDM"))
+        {
+            DrawConfigItem("Replace Verfire with Jolt", ref _config.Rdm.ReplaceVerfire);
+            DrawConfigItem("Replace Verstone with Jolt", ref _config.Rdm.ReplaceVerstone);
+            DrawConfigItem("Replace Enchanted Combo", ref _config.Rdm.DoEnchantedCombo);
         }
 
         if (ImGui.CollapsingHeader("SAM"))

@@ -19,12 +19,8 @@ public sealed class IconReplacer : IDisposable
     /// <summary>
     /// Set up our skill replacers and function hooks.
     /// </summary>
-    public IconReplacer(Configuration config, IGameInteropProvider interop)
+    public IconReplacer(IGameInteropProvider interop)
     {
-        // first we load up our skill replacers - no configuration because
-        // this is written for me and only me.
-        Build(config);
-
         // hook the relevant functions
         _getIcon = interop.HookFromAddress<OnGetIcon>(
             ActionManager.Addresses.GetAdjustedActionId.Value,
@@ -41,10 +37,13 @@ public sealed class IconReplacer : IDisposable
 
     public void Build(Configuration config)
     {
-        new Ast().Load(config, _iconMap);
-        new Gnb().Load(config, _iconMap);
-        new Sam().Load(config, _iconMap);
-        new Smn().Load(config, _iconMap);
+        // new Ast().Load(config, _iconMap);
+        // new Blm().Load(config, _iconMap);
+        // new Dnc().Load(config, _iconMap);
+        // new Gnb().Load(config, _iconMap);
+        // new Rdm().Load(config, _iconMap);
+        // new Sam().Load(config, _iconMap);
+        // new Smn().Load(config, _iconMap);
     }
 
     /// <summary>
