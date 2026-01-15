@@ -9,10 +9,16 @@ public sealed class Blm : IJob
 
     public void Load(Configuration config, IconMap map)
     {
-        // TODO: check levels
         // map.Set(Fire4, ReplaceFire4, false);
-        map.Set(Flare, ReplaceFlare, true);
-        map.Set(Despair, ReplaceDespair, true);
+        if (Player.Level >= 50)
+        {
+            map.Set(Flare, ReplaceFlare, config.Blm.PlaceFreezeOnFlare);
+        }
+
+        if (Player.Level >= 100)
+        {
+            map.Set(Despair, ReplaceDespair, config.Blm.PlaceFlareStarOnDespair);
+        }
     }
 
     private const uint

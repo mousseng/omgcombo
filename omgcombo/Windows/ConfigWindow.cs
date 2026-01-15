@@ -4,60 +4,55 @@ using Dalamud.Bindings.ImGui;
 
 namespace omgcombo.Windows;
 
-public sealed class ConfigWindow : Window
+public sealed class ConfigWindow(
+    IDalamudPluginInterface dalamud,
+    Configuration config,
+    IconReplacer iconReplacer)
+    : Window("omgcombo config")
 {
-    private readonly IDalamudPluginInterface _dalamud;
-    private readonly Configuration _config;
-    private readonly IconReplacer _iconReplacer;
-
-    public ConfigWindow(
-        IDalamudPluginInterface dalamud,
-        Configuration config,
-        IconReplacer iconReplacer)
-        : base("omgcombo config")
-    {
-        _dalamud = dalamud;
-        _config = config;
-        _iconReplacer = iconReplacer;
-    }
-
     public override void Draw()
     {
         if (ImGui.CollapsingHeader("AST"))
         {
-            DrawConfigItem("Place Play I on Draw", ref _config.Ast.PlacePlay1OnDraw);
-            DrawConfigItem("Place Play II on Exaltation", ref _config.Ast.PlacePlay2OnExaltation);
-            DrawConfigItem("Place Play III on Intersection", ref _config.Ast.PlacePlay3OnIntersection);
+            DrawConfigItem("Place Play I on Draw", ref config.Ast.PlacePlay1OnDraw);
+            DrawConfigItem("Place Play II on Exaltation", ref config.Ast.PlacePlay2OnExaltation);
+            DrawConfigItem("Place Play III on Intersection", ref config.Ast.PlacePlay3OnIntersection);
+        }
+
+        if (ImGui.CollapsingHeader("BLM"))
+        {
+            DrawConfigItem("Place Freeze on Flare", ref config.Blm.PlaceFreezeOnFlare);
+            DrawConfigItem("Place Play II on Exaltation", ref config.Blm.PlaceFlareStarOnDespair);
         }
 
         if (ImGui.CollapsingHeader("GNB"))
         {
-            DrawConfigItem("Replace Solid Barrel Combo", ref _config.Gnb.DoSolidBarrelCombo);
-            DrawConfigItem("Replace Demon Slaughter Combo", ref _config.Gnb.DoDemonSlaughterCombo);
+            DrawConfigItem("Replace Solid Barrel Combo", ref config.Gnb.DoSolidBarrelCombo);
+            DrawConfigItem("Replace Demon Slaughter Combo", ref config.Gnb.DoDemonSlaughterCombo);
         }
 
         if (ImGui.CollapsingHeader("RDM"))
         {
-            DrawConfigItem("Replace Verfire with Jolt", ref _config.Rdm.ReplaceVerfire);
-            DrawConfigItem("Replace Verstone with Jolt", ref _config.Rdm.ReplaceVerstone);
-            DrawConfigItem("Replace Enchanted Combo", ref _config.Rdm.DoEnchantedCombo);
+            DrawConfigItem("Replace Verfire with Jolt", ref config.Rdm.ReplaceVerfire);
+            DrawConfigItem("Replace Verstone with Jolt", ref config.Rdm.ReplaceVerstone);
+            DrawConfigItem("Replace Enchanted Combo", ref config.Rdm.DoEnchantedCombo);
         }
 
         if (ImGui.CollapsingHeader("SAM"))
         {
-            DrawConfigItem("Replace Gekko Combo", ref _config.Sam.DoGekkoCombo);
-            DrawConfigItem("Replace Kasha Combo", ref _config.Sam.DoKashaCombo);
-            DrawConfigItem("Replace Yukikaze Combo", ref _config.Sam.DoYukikazeCombo);
-            DrawConfigItem("Replace Mangetsu Combo", ref _config.Sam.DoMangetsuCombo);
-            DrawConfigItem("Replace Oka Combo", ref _config.Sam.DoOkaCombo);
-            DrawConfigItem("Replace Iaijutsu", ref _config.Sam.DoIaijutsu);
-            DrawConfigItem("Replace Ikishoten", ref _config.Sam.DoIkishoten);
+            DrawConfigItem("Replace Gekko Combo", ref config.Sam.DoGekkoCombo);
+            DrawConfigItem("Replace Kasha Combo", ref config.Sam.DoKashaCombo);
+            DrawConfigItem("Replace Yukikaze Combo", ref config.Sam.DoYukikazeCombo);
+            DrawConfigItem("Replace Mangetsu Combo", ref config.Sam.DoMangetsuCombo);
+            DrawConfigItem("Replace Oka Combo", ref config.Sam.DoOkaCombo);
+            DrawConfigItem("Replace Iaijutsu", ref config.Sam.DoIaijutsu);
+            DrawConfigItem("Replace Ikishoten", ref config.Sam.DoIkishoten);
         }
 
         if (ImGui.CollapsingHeader("SMN"))
         {
-            DrawConfigItem("Replace Energy Drain with Fester", ref _config.Smn.EnergyDrainIntoFester);
-            DrawConfigItem("Replace Energy Siphon with Painflare", ref _config.Smn.EnergySiphonIntoPainflare);
+            DrawConfigItem("Replace Energy Drain with Fester", ref config.Smn.EnergyDrainIntoFester);
+            DrawConfigItem("Replace Energy Siphon with Painflare", ref config.Smn.EnergySiphonIntoPainflare);
         }
     }
 
@@ -65,8 +60,8 @@ public sealed class ConfigWindow : Window
     {
         if (ImGui.Checkbox($"{label}", ref configItem))
         {
-            _dalamud.SavePluginConfig(_config);
-            _iconReplacer.Build(_config);
+            dalamud.SavePluginConfig(config);
+            iconReplacer.Build(config);
         }
     }
 }

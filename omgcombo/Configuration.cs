@@ -8,6 +8,7 @@ public sealed class Configuration : IPluginConfiguration
     public int Version { get; set; }
 
     public AstConfiguration Ast { get; } = new();
+    public BlmConfiguration Blm { get; } = new();
     public GnbConfiguration Gnb { get; } = new();
     public RdmConfiguration Rdm { get; } = new();
     public SamConfiguration Sam { get; } = new();
@@ -20,6 +21,13 @@ public sealed class AstConfiguration
     public bool PlacePlay1OnDraw;
     public bool PlacePlay2OnExaltation;
     public bool PlacePlay3OnIntersection;
+}
+
+[Serializable]
+public sealed class BlmConfiguration
+{
+    public bool PlaceFreezeOnFlare;
+    public bool PlaceFlareStarOnDespair;
 }
 
 [Serializable]

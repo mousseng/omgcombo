@@ -6,20 +6,11 @@ using omgcombo.Services;
 
 namespace omgcombo.Windows;
 
-public sealed unsafe class DebugWindow: Window
+public sealed unsafe class DebugWindow(
+    IDalamudPluginInterface dalamud,
+    Configuration config)
+    : Window("omgcombo debug")
 {
-    private readonly IDalamudPluginInterface _dalamud;
-    private readonly Configuration _config;
-
-    public DebugWindow(
-        IDalamudPluginInterface dalamud,
-        Configuration config)
-        : base("omgcombo debug")
-    {
-        _dalamud = dalamud;
-        _config = config;
-    }
-
     public override void Draw()
     {
         ImGui.Text("put some debug stuff here");

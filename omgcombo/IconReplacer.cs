@@ -38,7 +38,7 @@ public sealed class IconReplacer : IDisposable
     public void Build(Configuration config)
     {
         // new Ast().Load(config, _iconMap);
-        // new Blm().Load(config, _iconMap);
+        new Blm().Load(config, _iconMap);
         // new Dnc().Load(config, _iconMap);
         // new Gnb().Load(config, _iconMap);
         // new Rdm().Load(config, _iconMap);
