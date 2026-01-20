@@ -22,7 +22,7 @@ public sealed class ConfigWindow(
         if (ImGui.CollapsingHeader("BLM"))
         {
             DrawConfigItem("Place Freeze on Flare", ref config.Blm.PlaceFreezeOnFlare);
-            DrawConfigItem("Place Play II on Exaltation", ref config.Blm.PlaceFlareStarOnDespair);
+            DrawConfigItem("Place Flare Star on Despair", ref config.Blm.PlaceFlareStarOnDespair);
         }
 
         if (ImGui.CollapsingHeader("GNB"))
