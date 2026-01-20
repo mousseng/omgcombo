@@ -40,7 +40,7 @@ public sealed class IconReplacer : IDisposable
         // new Ast().Load(config, _iconMap);
         new Blm().Load(config, _iconMap);
         // new Dnc().Load(config, _iconMap);
-        // new Gnb().Load(config, _iconMap);
+        new Gnb().Load(config, _iconMap);
         // new Rdm().Load(config, _iconMap);
         // new Sam().Load(config, _iconMap);
         // new Smn().Load(config, _iconMap);
