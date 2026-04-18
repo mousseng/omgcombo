@@ -4,15 +4,15 @@ namespace omgcombo.Services;
 
 public static class Logger
 {
-    private static IPluginLog PluginLog;
+    private static IPluginLog pluginLog;
 
     public static void Init(IPluginLog pluginLog)
     {
-        PluginLog = pluginLog;
+        Logger.pluginLog = pluginLog;
     }
 
     public static void Debug(string messageTemplate, params object[] values)
     {
-        PluginLog.Debug(messageTemplate, values);
+        pluginLog.Debug(messageTemplate, values);
     }
 }

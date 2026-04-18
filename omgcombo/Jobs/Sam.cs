@@ -6,7 +6,7 @@ namespace omgcombo.Jobs;
 
 public sealed class Sam : IJob
 {
-    private readonly SAMGauge _gauge = Gauges.Get<SAMGauge>();
+    private readonly SAMGauge gauge = Gauges.Get<SAMGauge>();
 
     public void Load(Configuration config, IconMap map)
     {
@@ -121,7 +121,7 @@ public sealed class Sam : IJob
 
     private uint DoZanshin()
     {
-        if (_gauge.Kaeshi == Kaeshi.Namikiri)
+        if (gauge.Kaeshi == Kaeshi.Namikiri)
         {
             return KaeshiNamikiri;
         }
@@ -141,7 +141,7 @@ public sealed class Sam : IJob
 
     private uint DoIkishoten()
     {
-        if (_gauge.Kaeshi == Kaeshi.Namikiri)
+        if (gauge.Kaeshi == Kaeshi.Namikiri)
         {
             return KaeshiNamikiri;
         }
@@ -171,7 +171,7 @@ public sealed class Sam : IJob
 
     private uint DoIaijutsu(uint h, uint g, uint s)
     {
-        return (byte)_gauge.Sen switch
+        return (byte)gauge.Sen switch
         {
             0b001 or 0b010 or 0b100 => h,
             0b011 or 0b101 or 0b110 => g,

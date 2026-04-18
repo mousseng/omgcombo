@@ -25,6 +25,19 @@ public sealed class ConfigWindow(
             DrawConfigItem("Place Flare Star on Despair", ref config.Blm.PlaceFlareStarOnDespair);
         }
 
+        if (ImGui.CollapsingHeader("DNC"))
+        {
+            DrawConfigItem("Place Rising Windmill on Windmill", ref config.Dnc.PlaceRisingOnWindmill);
+            DrawConfigItem("Place Bloodshower on Bladeshower", ref config.Dnc.PlaceBloodOnBlade);
+            DrawConfigItem("Place Fan Dance 3 on Fan Dance 2", ref config.Dnc.PlaceFd3OnFd2);
+            DrawConfigItem("Place Fan Dance 4 on Flourish", ref config.Dnc.PlaceFd4OnFlourish);
+            DrawConfigItem("Place Last Dance on Standard Step", ref config.Dnc.PlaceLastDanceOnStandardStep);
+        }
+
+        if (ImGui.CollapsingHeader("DRG"))
+        {
+        }
+
         if (ImGui.CollapsingHeader("GNB"))
         {
             DrawConfigItem("Replace Solid Barrel Combo", ref config.Gnb.DoSolidBarrelCombo);

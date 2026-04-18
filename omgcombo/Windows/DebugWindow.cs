@@ -11,10 +11,17 @@ public sealed unsafe class DebugWindow(
     Configuration config)
     : Window("omgcombo debug")
 {
+    private readonly ASTGauge astGauge = Gauges.Get<ASTGauge>();
+
     public override void Draw()
     {
-        ImGui.Text("put some debug stuff here");
-        var blm = Gauges.Get<BLMGauge>();
-        ImGui.Text($"Astral Soul: {blm.AstralSoulStacks}");
+        if (ImGui.CollapsingHeader("AST"))
+        {
+            ImGui.Text($"Draw Type: {astGauge.ActiveDraw}");
+            ImGui.Text($"Card 0: {astGauge.DrawnCards[0]}");
+            ImGui.Text($"Card 1: {astGauge.DrawnCards[1]}");
+            ImGui.Text($"Card 2: {astGauge.DrawnCards[2]}");
+            ImGui.Text($"Crown: {astGauge.DrawnCrownCard}");
+        }
     }
 }

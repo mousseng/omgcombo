@@ -65,16 +65,16 @@ public sealed class Plugin : IDalamudPlugin
         Logger.Init(PluginLog);
     }
 
-    private int _lastLevel;
+    private int lastLevel;
     private void WatchPlayerLevel(IFramework framework)
     {
-        if (Player.Level == _lastLevel)
+        if (Player.Level == lastLevel)
         {
             return;
         }
 
         IconReplacer!.Build(Config);
-        _lastLevel = Player.Level;
+        lastLevel = Player.Level;
     }
 
     public void Dispose()

@@ -9,6 +9,8 @@ public sealed class Configuration : IPluginConfiguration
 
     public AstConfiguration Ast { get; } = new();
     public BlmConfiguration Blm { get; } = new();
+    public DncConfiguration Dnc { get; } = new();
+    public DrgConfiguration Drg { get; } = new();
     public GnbConfiguration Gnb { get; } = new();
     public RdmConfiguration Rdm { get; } = new();
     public SamConfiguration Sam { get; } = new();
@@ -28,6 +30,21 @@ public sealed class BlmConfiguration
 {
     public bool PlaceFreezeOnFlare;
     public bool PlaceFlareStarOnDespair;
+}
+
+[Serializable]
+public sealed class DncConfiguration
+{
+    public bool PlaceRisingOnWindmill;
+    public bool PlaceBloodOnBlade;
+    public bool PlaceFd3OnFd2;
+    public bool PlaceFd4OnFlourish;
+    public bool PlaceLastDanceOnStandardStep;
+}
+
+[Serializable]
+public sealed class DrgConfiguration
+{
 }
 
 [Serializable]

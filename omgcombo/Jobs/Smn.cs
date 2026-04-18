@@ -5,7 +5,7 @@ namespace omgcombo.Jobs;
 
 public sealed class Smn : IJob
 {
-    private readonly SMNGauge _gauge = Gauges.Get<SMNGauge>();
+    private readonly SMNGauge gauge = Gauges.Get<SMNGauge>();
 
     public void Load(Configuration config, IconMap map)
     {
@@ -22,14 +22,14 @@ public sealed class Smn : IJob
 
     private IconReplacer.ReplaceIcon? MakeEnergyDrain() => Player.Level switch
     {
-        >= 92 => () => _gauge.HasAetherflowStacks ? Necrotize : EnergyDrain,
-        >= 10 => () => _gauge.HasAetherflowStacks ? Fester : EnergyDrain,
+        >= 92 => () => gauge.HasAetherflowStacks ? Necrotize : EnergyDrain,
+        >= 10 => () => gauge.HasAetherflowStacks ? Fester : EnergyDrain,
         _     => null
     };
 
     private IconReplacer.ReplaceIcon? MakeEnergySiphon() => Player.Level switch
     {
-        >= 40 => () => _gauge.HasAetherflowStacks ? Painflare : EnergySiphon,
+        >= 40 => () => gauge.HasAetherflowStacks ? Painflare : EnergySiphon,
         _     => null
     };
 }

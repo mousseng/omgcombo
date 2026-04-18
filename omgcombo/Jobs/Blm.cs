@@ -5,7 +5,7 @@ namespace omgcombo.Jobs;
 
 public sealed class Blm : IJob
 {
-    private readonly BLMGauge _gauge = Gauges.Get<BLMGauge>();
+    private readonly BLMGauge gauge = Gauges.Get<BLMGauge>();
 
     public void Load(Configuration config, IconMap map)
     {
@@ -36,11 +36,11 @@ public sealed class Blm : IJob
 
     private uint ReplaceFlare()
     {
-        return _gauge.InUmbralIce ? Freeze : Flare;
+        return gauge.InUmbralIce ? Freeze : Flare;
     }
 
     private uint ReplaceDespair()
     {
-        return _gauge.AstralSoulStacks >= 6 ? FlareStar : Despair;
+        return gauge.AstralSoulStacks >= 6 ? FlareStar : Despair;
     }
 }

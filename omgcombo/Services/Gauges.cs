@@ -5,15 +5,15 @@ namespace omgcombo.Services;
 
 public static class Gauges
 {
-    private static IJobGauges JobGauges;
+    private static IJobGauges jobGauges;
 
     public static T Get<T>() where T : JobGaugeBase
     {
-        return JobGauges.Get<T>();
+        return jobGauges.Get<T>();
     }
 
     public static void Init(IJobGauges gauges)
     {
-        JobGauges = gauges;
+        jobGauges = gauges;
     }
 }

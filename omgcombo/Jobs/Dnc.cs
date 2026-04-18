@@ -5,16 +5,15 @@ namespace omgcombo.Jobs;
 
 public sealed class Dnc : IJob
 {
-    private readonly DNCGauge _gauge = Gauges.Get<DNCGauge>();
+    private readonly DNCGauge gauge = Gauges.Get<DNCGauge>();
 
     public void Load(Configuration config, IconMap map)
     {
-        map.Set(Windmill, MakeWindmill(), true);
-        map.Set(Bladeshower, MakeBladeshower(), true);
-        map.Set(FanDance2, MakeFanDance(), true);
-        map.Set(Flourish, MakeFlourish(), true);
-        map.Set(Devilment, MakeDevilment(), true);
-        map.Set(StandardStep, MakeLastDance(), true);
+        map.Set(Windmill, MakeWindmill(), config.Dnc.PlaceRisingOnWindmill);
+        map.Set(Bladeshower, MakeBladeshower(), config.Dnc.PlaceBloodOnBlade);
+        map.Set(FanDance2, MakeFanDance(), config.Dnc.PlaceFd3OnFd2);
+        map.Set(Flourish, MakeFlourish(), config.Dnc.PlaceFd4OnFlourish);
+        map.Set(StandardStep, MakeLastDance(), config.Dnc.PlaceLastDanceOnStandardStep);
     }
 
     private const uint
@@ -72,12 +71,6 @@ public sealed class Dnc : IJob
         _ => null
     };
 
-    private static IconReplacer.ReplaceIcon? MakeDevilment() => Player.Level switch
-    {
-        >= 90 => () => Player.HasBuff(StarfallReady) ? Starfall : Devilment,
-        _     => null
-    };
-
     private IconReplacer.ReplaceIcon? MakeLastDance() => Player.Level switch
     {
         >= 96 => () => Player.HasBuff(LastDanceReady) ? LastDance : DoEnhancedStandardStep(),
@@ -87,12 +80,12 @@ public sealed class Dnc : IJob
 
     private uint DoEnhancedStandardStep()
     {
-        if (!_gauge.IsDancing)
+        if (!gauge.IsDancing)
         {
             return Player.HasBuff(FinishingMoveReady) ? FinishingMove : StandardStep;
         }
 
-        return _gauge.CompletedSteps switch
+        return gauge.CompletedSteps switch
         {
             2 => DoubleStandardFinish,
             1 => SingleStandardFinish,
@@ -102,12 +95,12 @@ public sealed class Dnc : IJob
 
     private uint DoStandardStep()
     {
-        if (!(_gauge.IsDancing && Player.HasBuff(StandardDancing)))
+        if (!(gauge.IsDancing && Player.HasBuff(StandardDancing)))
         {
             return StandardStep;
         }
 
-        return _gauge.CompletedSteps switch
+        return gauge.CompletedSteps switch
         {
             2 => DoubleStandardFinish,
             1 => SingleStandardFinish,

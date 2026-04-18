@@ -38,4 +38,22 @@ public static class Utils
 
         return step1;
     }
+
+    public static uint DoCombo(params uint[] steps)
+    {
+        if (Combos.ComboTime <= 0)
+        {
+            return steps[0];
+        }
+
+        for (var i = 1; i < steps.Length; i++)
+        {
+            if (Combos.LastMove == steps[i - 1])
+            {
+                return steps[i];
+            }
+        }
+
+        return steps[0];
+    }
 }

@@ -12,9 +12,9 @@ public sealed class IconReplacer : IDisposable
     private delegate uint OnGetIcon(byte self, uint action);
     private delegate uint OnCanReplace(uint action);
 
-    private readonly Hook<OnGetIcon> _getIcon;
-    private readonly Hook<OnCanReplace> _canReplace;
-    private readonly IconMap _iconMap = new();
+    private readonly Hook<OnGetIcon> getIcon;
+    private readonly Hook<OnCanReplace> canReplace;
+    private readonly IconMap iconMap = new();
 
     /// <summary>
     /// Set up our skill replacers and function hooks.
@@ -22,28 +22,28 @@ public sealed class IconReplacer : IDisposable
     public IconReplacer(IGameInteropProvider interop)
     {
         // hook the relevant functions
-        _getIcon = interop.HookFromAddress<OnGetIcon>(
+        getIcon = interop.HookFromAddress<OnGetIcon>(
             ActionManager.Addresses.GetAdjustedActionId.Value,
             GetIcon);
 
-        _canReplace = interop.HookFromSignature<OnCanReplace>(
+        canReplace = interop.HookFromSignature<OnCanReplace>(
             "40 53 48 83 EC 20 8B D9 48 8B 0D ?? ?? ?? ?? E8 ?? ?? ?? ?? 48 85 C0 74 1F",
             CanReplace);
 
         // turn on the hooks
-        _getIcon.Enable();
-        _canReplace.Enable();
+        getIcon.Enable();
+        canReplace.Enable();
     }
 
     public void Build(Configuration config)
     {
-        // new Ast().Load(config, _iconMap);
-        new Blm().Load(config, _iconMap);
-        // new Dnc().Load(config, _iconMap);
-        new Gnb().Load(config, _iconMap);
-        // new Rdm().Load(config, _iconMap);
-        // new Sam().Load(config, _iconMap);
-        // new Smn().Load(config, _iconMap);
+        new Ast().Load(config, iconMap);
+        new Blm().Load(config, iconMap);
+        new Dnc().Load(config, iconMap);
+        new Gnb().Load(config, iconMap);
+        new Rdm().Load(config, iconMap);
+        new Sam().Load(config, iconMap);
+        new Smn().Load(config, iconMap);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public sealed class IconReplacer : IDisposable
     /// </summary>
     private uint CanReplace(uint action)
     {
-        return _iconMap.ContainsKey(action) ? 1 : _canReplace.Original(action);
+        return iconMap.ContainsKey(action) ? 1 : canReplace.Original(action);
     }
 
     /// <summary>
@@ -66,21 +66,21 @@ public sealed class IconReplacer : IDisposable
     {
         if (!Combos.IsReady)
         {
-            return _getIcon.Original(self, action);
+            return getIcon.Original(self, action);
         }
 
-        if (_iconMap.TryGetValue(action, out var replacer))
+        if (iconMap.TryGetValue(action, out var replacer))
         {
             return replacer();
         }
 
-        return _getIcon.Original(self, action);
+        return getIcon.Original(self, action);
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        _getIcon.Dispose();
-        _canReplace.Dispose();
+        getIcon.Dispose();
+        canReplace.Dispose();
     }
 }

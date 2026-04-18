@@ -5,19 +5,19 @@ namespace omgcombo.Services;
 
 public static class Player
 {
-    private static IClientState ClientState;
-    public static int Level => ClientState.LocalPlayer?.Level ?? default;
+    private static IClientState clientState;
+    public static int Level => clientState.LocalPlayer?.Level ?? default;
     // public static uint Job => ClientState.LocalPlayer?.ClassJob.Id ?? default;
-    public static StatusList? Buffs => ClientState.LocalPlayer?.StatusList;
+    public static StatusList? Buffs => clientState.LocalPlayer?.StatusList;
 
     public static bool HasBuff(uint buffId)
     {
-        var buffs = ClientState.LocalPlayer?.StatusList;
+        var buffs = clientState.LocalPlayer?.StatusList;
         return buffs is not null && buffs.Any(buff => buff.StatusId == buffId);
     }
 
     public static void Init(IClientState clientState)
     {
-        ClientState = clientState;
+        Player.clientState = clientState;
     }
 }
