@@ -16,6 +16,7 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] private static IGameInteropProvider Interop { get; set; }
     [PluginService] private static IFramework Framework { get; set; }
     [PluginService] private static IClientState Game { get; set; }
+    [PluginService] private static IObjectTable Objects { get; set; }
     [PluginService] private static IJobGauges JobGauges { get; set; }
     [PluginService] private static IPluginLog PluginLog { get; set; }
 
@@ -61,7 +62,7 @@ public sealed class Plugin : IDalamudPlugin
     {
         Combos.Init();
         Gauges.Init(JobGauges);
-        Player.Init(Game);
+        Player.Init(Objects);
         Logger.Init(PluginLog);
     }
 
